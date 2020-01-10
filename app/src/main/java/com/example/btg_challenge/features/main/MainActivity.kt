@@ -1,7 +1,8 @@
-package com.example.btg_challenge
+package com.example.btg_challenge.features.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.btg_challenge.R
 
 class MainActivity : AppCompatActivity() {
 
