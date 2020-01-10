@@ -21,6 +21,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -32,4 +35,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+    //Volley
+    implementation 'com.android.volley:volley:1.1.1'
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    //material
+    implementation 'com.google.android.material:material:1.0.0'
 }
