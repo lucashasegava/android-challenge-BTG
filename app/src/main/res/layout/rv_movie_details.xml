@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="showDefaultContent"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="showSearchContent"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="movieModel"
+            type="com.example.btg_challenge.models.MoviesResponseModel.Result" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/rvMovieDetailsPosterImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/rvMovieDetailsNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:text="@{movieModel.title}"
+            app:layout_constraintBottom_toTopOf="@id/gl50"
+            app:layout_constraintLeft_toRightOf="@id/rvMovieDetailsPosterImageView"/>
+
+        <TextView
+            android:id="@+id/rvMovieDetailsYearTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{movieModel.releaseDate}"
+            app:layout_constraintLeft_toLeftOf="@id/rvMovieDetailsNameTextView"
+            app:layout_constraintTop_toBottomOf="@id/gl50"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

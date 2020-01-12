@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -44,4 +46,6 @@ dependencies {
 
     //material
     implementation 'com.google.android.material:material:1.0.0'
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

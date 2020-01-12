@@ -2,22 +2,25 @@ package com.example.btg_challenge.models
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class MoviesResponseModel(
     @SerializedName("page")
-    val page: Int,
+    val page: Int?,
     @SerializedName("results")
-    val results: List<Result>,
+    val results: List<Result>?,
     @SerializedName("total_pages")
-    val totalPages: Int,
+    val totalPages: Int?,
     @SerializedName("total_results")
-    val totalResults: Int
-) {
+    val totalResults: Int?,
+    @SerializedName("favoriteMovies")
+    val favoriteMovies : List<Result>?
+) : Serializable {
     data class Result(
         @SerializedName("adult")
         val adult: Boolean,
         @SerializedName("backdrop_path")
-        val backdropPath: String,
+        val backdropPath: String?,
         @SerializedName("genre_ids")
         val genreIds: List<Int>,
         @SerializedName("id")
@@ -31,7 +34,7 @@ data class MoviesResponseModel(
         @SerializedName("popularity")
         val popularity: Double,
         @SerializedName("poster_path")
-        val posterPath: String,
+        val posterPath: String?,
         @SerializedName("release_date")
         val releaseDate: String,
         @SerializedName("title")
