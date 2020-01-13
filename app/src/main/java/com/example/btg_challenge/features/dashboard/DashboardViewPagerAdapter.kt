@@ -25,6 +25,10 @@ class DashboardViewPagerAdapter(manager: FragmentManager) :
         return listFragment.size
     }
 
+    override fun getPageTitle(position: Int): CharSequence? {
+        return super.getPageTitle(position)
+    }
+
     fun setMoviesResponse(moviesResponseModel: MoviesResponseModel, listFragment : ArrayList<Fragment>) {
         this.moviesResponseModel = moviesResponseModel
         this.listFragment = listFragment

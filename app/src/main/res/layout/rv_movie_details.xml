@@ -22,14 +22,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/rvMovieDetailsPosterImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_width="200dp"
+            android:layout_height="300dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,11 +42,13 @@
 
         <TextView
             android:id="@+id/rvMovieDetailsNameTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
             android:text="@{movieModel.title}"
             app:layout_constraintBottom_toTopOf="@id/gl50"
+            app:layout_constraintRight_toLeftOf="@id/rvMovieDetailsFavoriteImageView"
             app:layout_constraintLeft_toRightOf="@id/rvMovieDetailsPosterImageView"/>
 
         <TextView
@@ -57,5 +59,24 @@
             app:layout_constraintLeft_toLeftOf="@id/rvMovieDetailsNameTextView"
             app:layout_constraintTop_toBottomOf="@id/gl50"
             />
+
+        <ImageView
+            android:id="@+id/rvMovieDetailsFavoriteImageView"
+            android:src="@drawable/ic_favorite_border_red_24dp"
+            app:layout_constraintTop_toTopOf="@id/gl50"
+            app:layout_constraintBottom_toBottomOf="@id/gl50"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="@dimen/default_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:id="@+id/rvMovieDetailsTouchAreaView"
+            app:layout_constraintTop_toTopOf="@id/rvMovieDetailsPosterImageView"
+            app:layout_constraintBottom_toBottomOf="@id/rvMovieDetailsPosterImageView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/rvMovieDetailsFavoriteImageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

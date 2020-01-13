@@ -14,6 +14,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragmentMovieListRecyclerView"
+        android:layout_marginTop="@dimen/default_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/rv_movie_details"

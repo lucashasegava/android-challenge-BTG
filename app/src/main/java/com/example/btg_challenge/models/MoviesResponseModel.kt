@@ -1,8 +1,17 @@
 package com.example.btg_challenge.models
 
 
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import com.example.btg_challenge.constants.EndPointsConstants
 import com.google.gson.annotations.SerializedName
+import com.squareup.picasso.Picasso
 import java.io.Serializable
+
+@BindingAdapter("imageURL")
+fun loadImage(imageView: ImageView, resource: String) {
+    Picasso.get().load(resource).into(imageView)
+}
 
 data class MoviesResponseModel(
     @SerializedName("page")
@@ -14,7 +23,7 @@ data class MoviesResponseModel(
     @SerializedName("total_results")
     val totalResults: Int?,
     @SerializedName("favoriteMovies")
-    val favoriteMovies : List<Result>?
+    var favoriteMovies :ArrayList<Result>  = ArrayList<Result>()
 ) : Serializable {
     data class Result(
         @SerializedName("adult")
@@ -44,6 +53,8 @@ data class MoviesResponseModel(
         @SerializedName("vote_average")
         val voteAverage: Double,
         @SerializedName("vote_count")
-        val voteCount: Int
-    )
+        val voteCount: Int,
+        @SerializedName("favorite")
+        var favorite: Boolean
+    ) : Serializable
 }

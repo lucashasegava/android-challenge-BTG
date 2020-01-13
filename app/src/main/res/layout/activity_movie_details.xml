@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="movieModel"
+            type="com.example.btg_challenge.models.MoviesResponseModel.Result" />
+
+        <variable
+            name="imageUrl"
+            type="String" />
+
+        <variable
+            name="genreStrings"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/movieDetailsActivityCloseImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:onClick="closeMovieDetailsActivity"
+            android:src="@drawable/ic_close_black_24dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/movieDetailsActivityPosterImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_marginTop="@dimen/default_margin"
+            app:imageURL="@{imageUrl}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movieDetailsActivityCloseImageView" />
+
+        <ImageView
+            android:id="@+id/movieDetailsActivityFavoriteImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/default_margin"
+            android:src="@drawable/ic_favorite_border_red_24dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/movieDetailsActivityCloseImageView" />
+
+        <TextView
+            android:id="@+id/movieDetailsActivityTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@{movieModel.title}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movieDetailsActivityPosterImageView" />
+
+        <TextView
+            android:id="@+id/movieDetailsActivityPreviewTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/default_margin"
+            android:text="@{movieModel.overview}"
+            app:layout_constraintLeft_toLeftOf="@id/movieDetailsActivityTitleTextView"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movieDetailsActivityGenreTextView" />
+
+        <TextView
+            android:id="@+id/movieDetailsActivityScoreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{` `+ movieModel.voteAverage}"
+            app:layout_constraintLeft_toRightOf="@id/movieDetailsActivityTitleTextView"
+            app:layout_constraintTop_toTopOf="@id/movieDetailsActivityTitleTextView" />
+
+        <TextView
+            android:id="@+id/movieDetailsActivityGenreTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{genreStrings}"
+            app:layout_constraintLeft_toLeftOf="@id/movieDetailsActivityTitleTextView"
+            app:layout_constraintRight_toLeftOf="@id/movieDetailsActivityFavoriteImageView"
+            app:layout_constraintTop_toBottomOf="@id/movieDetailsActivityTitleTextView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
