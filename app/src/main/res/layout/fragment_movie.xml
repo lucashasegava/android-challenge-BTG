@@ -7,7 +7,15 @@
 
     <EditText
         android:id="@+id/fragmentMovieSearchBoxEditText"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:inputType="text"
+        android:imeOptions="actionDone"
         android:layout_width="match_parent"
+        android:hint="@string/name"
+        android:paddingLeft="20dp"
+        android:minHeight="45dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_edittext"
         app:layout_constraintTop_toTopOf="parent" />
@@ -16,9 +24,10 @@
         android:id="@+id/fragmentMovieListRecyclerView"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         tools:listitem="@layout/rv_movie_details"
-        app:layout_constraintTop_toBottomOf="@id/fragmentMovieSearchBoxEditText" />
+        app:layout_constraintTop_toBottomOf="@id/fragmentMovieSearchBoxEditText"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

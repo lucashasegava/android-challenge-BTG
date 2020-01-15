@@ -1,5 +1,6 @@
 package com.example.btg_challenge.features.dashboard.favorite
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.btg_challenge.R
+import com.example.btg_challenge.constants.RequestCodeConstants
+import com.example.btg_challenge.features.dashboard.DashboardActivity
 import com.example.btg_challenge.features.dashboard.DashboardViewModel
-import com.example.btg_challenge.features.dashboard.adapter.FavoriteMoviesAdapter
+import com.example.btg_challenge.features.dashboard.favorite.adapter.FavoriteMoviesAdapter
+import com.example.btg_challenge.features.dashboard.movie.MoviesViewModel
+import com.example.btg_challenge.features.details.MovieDetailsActivity
 import com.example.btg_challenge.models.MoviesResponseModel
 
 class FavoriteMoviesFragment : Fragment(), FavoriteMoviesViewModelInterface {
 
     private lateinit var moviesResponseModel: MoviesResponseModel
     private lateinit var adapter: FavoriteMoviesAdapter
+    private lateinit var favoriteMoviesViewModel: FavoriteMoviesViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,12 +32,17 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesViewModelInterface {
 
         getMoviesResponseModel()
         val recyclerView = view.findViewById<RecyclerView>(R.id.favoriteMoviesFragmentRecyclerView)
-        adapter = FavoriteMoviesAdapter()
-        adapter.setMovieResponseModel(moviesResponseModel)
+        adapter =
+            FavoriteMoviesAdapter(this)
         recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
 
+        favoriteMoviesViewModel = FavoriteMoviesViewModel(moviesResponseModel, this)
+        favoriteMoviesViewModel.setupSearchBar(
+            view.findViewById(R.id.favoriteMoviesFragmentTitleSearchBoxEditText),
+            view.findViewById(R.id.favoriteMoviesFragmentYearSearchBoxEditText)
+        )
         return view
     }
 
@@ -45,20 +57,41 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesViewModelInterface {
 
     override fun onResume() {
         super.onResume()
-        adapter.setMovieResponseModel(moviesResponseModel)
+        if (!moviesResponseModel.favoriteMovies.isNullOrEmpty()) {
+            adapter.setMovieResponseModel(moviesResponseModel.favoriteMovies)
+        }
     }
-
-//    private fun setupBroadCastReceiver() {
-//
-//
-//    }
-//    class MyBroadcastReceiver : BroadcastReceiver() {
-//        override fun onReceive(context: Context, intent: Intent) {
-//            val moviesResponseModel = intent.extras?.getSerializable("") as MoviesResponseModel
-//        }
-//    }
+    override fun openMovieDetailsActivity(
+        position: Int
+    ) {
+        val intent = Intent(activity, MovieDetailsActivity::class.java)
+        intent.putExtra(MoviesViewModel.MOVIE_MODEL_KEY, moviesResponseModel)
+        intent.putExtra(MoviesViewModel.MOVIE_POSITION_KEY, position)
+        intent.putExtra(MoviesViewModel.MOVIE_IS_FROM_FAVORITE_KEY, true)
+        activity?.startActivityForResult(
+            intent,
+            RequestCodeConstants.START_MOVIE_DETAILS_ACTIVITY_FROM_FAVORITES
+        )
+    }
 
     fun setMovieResponseModel(moviesResponseModel: MoviesResponseModel) {
         this.moviesResponseModel = moviesResponseModel
+        favoriteMoviesViewModel.setOriginalMovieList(moviesResponseModel.favoriteMovies)
+    }
+
+    fun updateModelFromRecyclerView(movies: MoviesResponseModel) {
+        moviesResponseModel = movies
+    }
+
+    override fun getMovieFromSearchBar(movies: ArrayList<MoviesResponseModel.Result>) {
+        adapter.setMovieResponseModel(movies)
+    }
+
+
+    override fun updateMovieList(movie: MoviesResponseModel.Result, condition: Boolean) {
+        moviesResponseModel =
+            favoriteMoviesViewModel.updateMovieModel(movie, moviesResponseModel, condition)
+//        val dashboardActivity = activity as DashboardActivity
+//        dashboardActivity.notifyDefaultListChanged(moviesResponseModel)
     }
 }

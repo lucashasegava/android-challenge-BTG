@@ -22,11 +22,13 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rvMovieDetailsContentConstraintLayout"
         android:layout_marginBottom="@dimen/default_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
+            android:layout_marginLeft="@dimen/default_margin"
             android:id="@+id/rvMovieDetailsPosterImageView"
             android:layout_width="200dp"
             android:layout_height="300dp"

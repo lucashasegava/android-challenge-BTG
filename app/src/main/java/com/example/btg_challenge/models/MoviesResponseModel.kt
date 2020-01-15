@@ -7,6 +7,11 @@ import com.example.btg_challenge.constants.EndPointsConstants
 import com.google.gson.annotations.SerializedName
 import com.squareup.picasso.Picasso
 import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 @BindingAdapter("imageURL")
 fun loadImage(imageView: ImageView, resource: String) {
@@ -17,7 +22,7 @@ data class MoviesResponseModel(
     @SerializedName("page")
     val page: Int?,
     @SerializedName("results")
-    val results: List<Result>?,
+    var results: ArrayList<Result>?,
     @SerializedName("total_pages")
     val totalPages: Int?,
     @SerializedName("total_results")
@@ -56,5 +61,10 @@ data class MoviesResponseModel(
         val voteCount: Int,
         @SerializedName("favorite")
         var favorite: Boolean
+//        ,
+//        @SerializedName("date")
+//        val date: Date = SimpleDateFormat("yyyy-MM-dd").parse(releaseDate)
+//        val date : Date? = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR")).parse(releaseDate)
+//        val date = sdf.format(releaseDate)
     ) : Serializable
 }

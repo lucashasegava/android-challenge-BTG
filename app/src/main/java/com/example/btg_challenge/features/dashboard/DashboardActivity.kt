@@ -20,6 +20,7 @@ class DashboardActivity : BaseActivity(), DashboardViewModelInterface {
     private val list = ArrayList<Fragment>()
     private val movieFragment = MovieFragment()
     private val favoriteMoviesFragment = FavoriteMoviesFragment()
+    private lateinit var moviesResponseModel: MoviesResponseModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,23 +42,33 @@ class DashboardActivity : BaseActivity(), DashboardViewModelInterface {
     override fun setMoviesResponseModel(moviesResponseModel: MoviesResponseModel) {
         list.add(movieFragment)
         list.add(favoriteMoviesFragment)
-        adapter.setMoviesResponse(moviesResponseModel, list)
+        val pageTitleList = ArrayList<String>()
+        pageTitleList.add(getString(R.string.movies))
+        pageTitleList.add(getString(R.string.favorites))
+        adapter.setMoviesResponse(moviesResponseModel, list, pageTitleList)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RequestCodeConstants.START_MOVIE_DETAILS_ACTIVITY){
-            val moviesResponseModel = data?.extras?.getSerializable("") as MoviesResponseModel
-            movieFragment.updateModelFromRecyclerView(moviesResponseModel)
-//            adapter.setMoviesResponse(moviesResponseModel, list)
+        when (requestCode) {
+            RequestCodeConstants.START_MOVIE_DETAILS_ACTIVITY -> {
+                val moviesResponseModel = data?.extras?.getSerializable("") as MoviesResponseModel
+                movieFragment.updateModelFromRecyclerView(moviesResponseModel)
+                notifyFavoriteListChanged(moviesResponseModel)
+            }
+            RequestCodeConstants.START_MOVIE_DETAILS_ACTIVITY_FROM_FAVORITES -> {
+                val moviesResponseModel = data?.extras?.getSerializable("") as MoviesResponseModel
+                favoriteMoviesFragment.updateModelFromRecyclerView(moviesResponseModel)
+                notifyDefaultListChanged(moviesResponseModel)
+            }
         }
     }
 
-    fun notifyListChanged(moviesResponseModel: MoviesResponseModel){
+    private fun notifyDefaultListChanged(moviesResponseModel: MoviesResponseModel) {
+        movieFragment.setMovieResponseModel(moviesResponseModel)
+    }
+
+    private fun notifyFavoriteListChanged(moviesResponseModel: MoviesResponseModel) {
         favoriteMoviesFragment.setMovieResponseModel(moviesResponseModel)
-//        val intent = Intent()
-//        intent.setAction("com.example.broadcast.MY_NOTIFICATION")
-//        intent.putExtra("", moviesResponseModel)
-//        sendBroadcast(intent)
     }
 }

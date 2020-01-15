@@ -11,6 +11,7 @@ import com.example.btg_challenge.models.MoviesResponseModel
 class DashboardViewPagerAdapter(manager: FragmentManager) :
     FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
+    private var pageTitleList = ArrayList<String>()
     private lateinit var moviesResponseModel: MoviesResponseModel
     private var listFragment = ArrayList<Fragment>()
 
@@ -26,12 +27,13 @@ class DashboardViewPagerAdapter(manager: FragmentManager) :
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return super.getPageTitle(position)
+        return pageTitleList[position]
     }
 
-    fun setMoviesResponse(moviesResponseModel: MoviesResponseModel, listFragment : ArrayList<Fragment>) {
+    fun setMoviesResponse(moviesResponseModel: MoviesResponseModel, listFragment : ArrayList<Fragment>, titleList : ArrayList<String>) {
         this.moviesResponseModel = moviesResponseModel
         this.listFragment = listFragment
+        this.pageTitleList = titleList
         notifyDataSetChanged()
     }
 }

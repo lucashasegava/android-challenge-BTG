@@ -4,6 +4,8 @@
     <!--Dashboard-->
     <string name="movies">Filmes</string>
     <string name="favorites">Favoritos</string>
+    <string name="name">Nome</string>
+    <string name="year">Ano</string>
 
     <!--Details-->
 </resources>

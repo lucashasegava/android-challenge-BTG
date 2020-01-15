@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -18,8 +19,7 @@ class MoviesAdapter(private val listener: MovieViewModelInterface) :
     RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
 
-    private lateinit var movies: MoviesResponseModel
-    private lateinit var currentMovie: MoviesResponseModel.Result
+    private lateinit var movies: ArrayList<MoviesResponseModel.Result>
     private val picasso = Picasso.get()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val view =
@@ -28,47 +28,52 @@ class MoviesAdapter(private val listener: MovieViewModelInterface) :
     }
 
     override fun getItemCount(): Int {
-        return if (!movies.results.isNullOrEmpty()) {
-            movies.results!!.size
+        return if (!movies.isNullOrEmpty()) {
+            movies.size
         } else {
             0
         }
     }
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-        currentMovie = movies.results!![position]
+        val movie = movies[position]
+        val context = holder.favoriteImageView.context
 
-        if (!currentMovie.posterPath.isNullOrEmpty()) {
-            val uri = EndPointsConstants.BASE_URL_POSTER + currentMovie.posterPath
-            picasso.load(uri).into(holder.imageView)
+        if (!movie.posterPath.isNullOrEmpty()) {
+            val uri = EndPointsConstants.BASE_URL_POSTER + movie.posterPath
+            ContextCompat.getDrawable(context, R.drawable.ic_local_movies_blue_50dp)?.let {
+                picasso.load(uri).placeholder(
+                    it
+                ).into(holder.imageView)
+            }
         }
 
-        if (currentMovie.favorite) {
+
+        if (movie.favorite) {
             holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_red_24dp)
         } else {
             holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_border_red_24dp)
         }
 
         holder.favoriteImageView.setOnClickListener {
-            movies.results!![position].favorite = !movies.results!![position].favorite
-//            currentMovie.favorite = !currentMovie.favorite
-            if (movies.results!![position].favorite) {
+//            movies[position].favorite = !movies[position].favorite
+            movie.favorite = !movie.favorite
+            if (movie.favorite) {
                 holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_red_24dp)
             } else {
                 holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_border_red_24dp)
             }
-            listener.updateFavoriteMoviesList(movies, position, movies.results!![position].favorite)
+            listener.updateFavoriteMoviesList(movie, movie.favorite)
         }
 
         holder.touchAreaView.setOnClickListener {
             listener.openMovieDetailsActivity(position)
         }
-
-        holder.viewDataBinding?.setVariable(BR.movieModel, currentMovie)
+        holder.viewDataBinding?.setVariable(BR.movieModel, movie)
     }
 
-    fun setMoviesResponseModel(moviesResponseModel: MoviesResponseModel) {
-        this.movies = moviesResponseModel
+    fun setMoviesResponseModel(movies: ArrayList<MoviesResponseModel.Result>) {
+        this.movies = movies
         notifyDataSetChanged()
     }
 

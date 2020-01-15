@@ -9,8 +9,30 @@ import com.example.btg_challenge.models.MoviesResponseModel
 class MovieDetailsViewModel(
     private val movies: MoviesResponseModel,
     private val position: Int,
+    private val isFromFavorite: Boolean,
     private val movieDetailsViewModelInterface: MovieDetailsViewModelInterface
 ) {
+
+    init {
+        val url: String
+        if (isFromFavorite) {
+            movieDetailsViewModelInterface.updateMovieModel(movies.favoriteMovies[position])
+            url = EndPointsConstants.BASE_URL_POSTER + movies.favoriteMovies[position].posterPath
+        } else {
+            movies.results?.get(position)
+                ?.let { movieDetailsViewModelInterface.updateMovieModel(it) }
+            url = EndPointsConstants.BASE_URL_POSTER + movies.results!![position].posterPath
+//            movieDetailsViewModelInterface.loadPoster(
+//                EndPointsConstants.BASE_URL_POSTER + movies.results?.get(
+//                    position
+//                )?.posterPath
+//            )
+        }
+        movieDetailsViewModelInterface.loadPoster(url)
+//        movies.results?.get(position)?.let { movieDetailsViewModelInterface.updateMovieModel(it) }
+
+    }
+
     fun getGenres() {
         val genreList = ArrayList<String>()
         var genre = String()
@@ -23,13 +45,15 @@ class MovieDetailsViewModel(
         genreList.forEach {
             genre += "$it, "
         }
-        movies.results?.get(position)?.let { movieDetailsViewModelInterface.updateMovieModel(it) }
-        movieDetailsViewModelInterface.loadPoster(EndPointsConstants.BASE_URL_POSTER + movies.results?.get(position)?.posterPath)
         movieDetailsViewModelInterface.getGenres(genre)
     }
 
-    fun setFavoriteImage(image: ImageView){
-        val currentMovie = movies.results!![position]
+    fun setFavoriteImage(image: ImageView) {
+        val currentMovie : MoviesResponseModel.Result = if (isFromFavorite) {
+            movies.favoriteMovies[position]
+        } else{
+            movies.results!![position]
+        }
         if (currentMovie.favorite) {
             image.setImageResource(R.drawable.ic_favorite_red_24dp)
         } else {
@@ -37,16 +61,22 @@ class MovieDetailsViewModel(
         }
         image.setOnClickListener {
             currentMovie.favorite = !currentMovie.favorite
+            if (movies.favoriteMovies == null) {
+                val movielist = ArrayList<MoviesResponseModel.Result>()
+                movies.favoriteMovies = movielist
+            }
             if (currentMovie.favorite) {
                 image.setImageResource(R.drawable.ic_favorite_red_24dp)
+                movies.favoriteMovies.add(currentMovie)
             } else {
                 image.setImageResource(R.drawable.ic_favorite_border_red_24dp)
+                movies.favoriteMovies.remove(currentMovie)
             }
-            movies.results[position].favorite = currentMovie.favorite
+            movies.results!![position].favorite = currentMovie.favorite
         }
     }
 
-    fun  getMovieResponseModel() : MoviesResponseModel{
+    fun getMovieResponseModel(): MoviesResponseModel {
         return movies
     }
 

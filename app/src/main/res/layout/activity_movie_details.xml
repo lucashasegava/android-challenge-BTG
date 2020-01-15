@@ -38,8 +38,8 @@
 
         <ImageView
             android:id="@+id/movieDetailsActivityPosterImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="300dp"
+            android:layout_width="250dp"
+            android:layout_height="350dp"
             android:layout_marginTop="@dimen/default_margin"
             app:imageURL="@{imageUrl}"
             app:layout_constraintLeft_toLeftOf="parent"

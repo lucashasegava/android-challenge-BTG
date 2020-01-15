@@ -25,7 +25,8 @@ class MovieDetailsActivity : BaseActivity(), MovieDetailsViewModelInterface {
         val movies =
             intent.getSerializableExtra(MoviesViewModel.MOVIE_MODEL_KEY) as MoviesResponseModel
         val position = intent.getIntExtra(MoviesViewModel.MOVIE_POSITION_KEY, 0)
-        movieDetailsViewModel = MovieDetailsViewModel(movies, position, this)
+        val isFromFavorite = intent.getBooleanExtra(MoviesViewModel.MOVIE_IS_FROM_FAVORITE_KEY, false)
+        movieDetailsViewModel = MovieDetailsViewModel(movies, position, isFromFavorite,this)
         movieDetailsViewModel.getGenres()
         movieDetailsViewModel.setFavoriteImage(movieDetailsActivityFavoriteImageView)
         activityMovieDetailsBinding.movieModel = movies.results?.get(position)
