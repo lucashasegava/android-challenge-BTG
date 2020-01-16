@@ -26,14 +26,8 @@ class MovieDetailsViewModel(
             movies.results?.get(position)
                 ?.let { movieDetailsViewModelInterface.updateMovieModel(it) }
             url = EndPointsConstants.BASE_URL_POSTER + movies.results!![position].posterPath
-//            movieDetailsViewModelInterface.loadPoster(
-//                EndPointsConstants.BASE_URL_POSTER + movies.results?.get(
-//                    position
-//                )?.posterPath
-//            )
         }
         movieDetailsViewModelInterface.loadPoster(url)
-//        movies.results?.get(position)?.let { movieDetailsViewModelInterface.updateMovieModel(it) }
 
     }
 

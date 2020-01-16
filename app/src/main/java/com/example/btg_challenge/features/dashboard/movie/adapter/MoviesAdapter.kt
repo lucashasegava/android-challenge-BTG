@@ -56,7 +56,6 @@ class MoviesAdapter(private val listener: MovieViewModelInterface) :
         }
 
         holder.favoriteImageView.setOnClickListener {
-//            movies[position].favorite = !movies[position].favorite
             movie.favorite = !movie.favorite
             if (movie.favorite) {
                 holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_red_24dp)

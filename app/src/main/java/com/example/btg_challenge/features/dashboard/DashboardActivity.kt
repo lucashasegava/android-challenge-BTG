@@ -25,7 +25,6 @@ class DashboardActivity : BaseActivity(), DashboardViewModelInterface {
     private lateinit var adapter: DashboardViewPagerAdapter
     private val movieFragment = MovieFragment()
     private val favoriteMoviesFragment = FavoriteMoviesFragment()
-    private lateinit var moviesResponseModel: MoviesResponseModel
     private lateinit var dialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,15 +78,11 @@ class DashboardActivity : BaseActivity(), DashboardViewModelInterface {
                 val moviesResponseModel =
                     data?.extras?.getSerializable(MovieDetailsViewModel.MODEL_FROM_MOVIE_DETAILS_KEY) as MoviesResponseModel
                 updateLists(moviesResponseModel)
-//                movieFragment.updateModelFromRecyclerView(moviesResponseModel)
-//                notifyFavoriteListChanged(moviesResponseModel)
             }
             RequestCodeConstants.START_MOVIE_DETAILS_ACTIVITY_FROM_FAVORITES -> {
                 val moviesResponseModel =
                     data?.extras?.getSerializable(MovieDetailsViewModel.MODEL_FROM_MOVIE_DETAILS_KEY) as MoviesResponseModel
                 updateLists(moviesResponseModel)
-//                favoriteMoviesFragment.updateModelFromRecyclerView(moviesResponseModel)
-//                notifyDefaultListChanged(moviesResponseModel)
             }
         }
     }

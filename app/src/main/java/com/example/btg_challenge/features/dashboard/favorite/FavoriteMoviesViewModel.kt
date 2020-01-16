@@ -13,9 +13,6 @@ class FavoriteMoviesViewModel(
     val favoriteMoviesViewModelInterface: FavoriteMoviesViewModelInterface
 ) {
 
-    private var originalMovies = ArrayList<MoviesResponseModel.Result>()
-
-
     fun updateMovieModel(
         movie: MoviesResponseModel.Result,
         movies: MoviesResponseModel,

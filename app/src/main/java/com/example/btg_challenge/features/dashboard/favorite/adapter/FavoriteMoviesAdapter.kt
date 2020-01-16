@@ -28,13 +28,6 @@ class FavoriteMoviesAdapter(val listener: FavoriteMoviesViewModelInterface) :
     }
 
     override fun getItemCount(): Int {
-//        var count = 0
-//        movies.results?.forEach {
-//            if (it.favorite){
-//                count++
-//            }
-//        }
-//        return count
         return if (!movies.isNullOrEmpty()) {
             movies.size
         } else {

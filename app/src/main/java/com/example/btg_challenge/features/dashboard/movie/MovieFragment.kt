@@ -25,8 +25,6 @@ class MovieFragment : Fragment(), MovieViewModelInterface {
     private lateinit var moviesViewModel: MoviesViewModel
     private lateinit var adapter: MoviesAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private var refreshed = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,8 +81,6 @@ class MovieFragment : Fragment(), MovieViewModelInterface {
     ) {
         moviesResponseModel =
             moviesViewModel.updateFavoriteMovies(movies, moviesResponseModel, condition)
-//        val dashboardActivity = activity as DashboardActivity
-//        dashboardActivity.notifyFavoriteListChanged(moviesResponseModel)
     }
 
     override fun openMovieDetailsActivity(position: Int) {
@@ -93,11 +89,6 @@ class MovieFragment : Fragment(), MovieViewModelInterface {
         intent.putExtra(MoviesViewModel.MOVIE_POSITION_KEY, position)
         activity?.startActivityForResult(intent, RequestCodeConstants.START_MOVIE_DETAILS_ACTIVITY)
     }
-
-//    fun updateModelFromRecyclerView(movies: MoviesResponseModel) {
-//        moviesResponseModel = movies
-//    }
-
     fun setMovieResponseModel(movies: MoviesResponseModel) {
         moviesResponseModel = movies
         moviesViewModel.updateViewModelList(moviesResponseModel)

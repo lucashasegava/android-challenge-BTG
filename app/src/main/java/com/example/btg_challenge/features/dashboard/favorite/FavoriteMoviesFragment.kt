@@ -89,10 +89,6 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesViewModelInterface{
         super.onPause()
     }
 
-//    fun updateModelFromRecyclerView(movies: MoviesResponseModel) {
-//        moviesResponseModel = movies
-//    }
-
     override fun getMovieFromSearchBar(movies: ArrayList<MoviesResponseModel.Result>) {
         adapter.setMovieResponseModel(movies)
     }
