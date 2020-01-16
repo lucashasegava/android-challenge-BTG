@@ -67,5 +67,13 @@ class MoviesViewModel(
         })
     }
 
+    fun updateViewModelList(movies: MoviesResponseModel){
+        this.movies = movies
+    }
+
+    fun clearText(et: EditText){
+        et.text.clear()
+    }
+
 
 }

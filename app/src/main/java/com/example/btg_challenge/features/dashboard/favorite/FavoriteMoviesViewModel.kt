@@ -34,18 +34,10 @@ class FavoriteMoviesViewModel(
         return movies
     }
 
-    fun setOriginalMovieList(list: ArrayList<MoviesResponseModel.Result>) {
-        if (!list.isNullOrEmpty()) {
-            originalMovies =
-                list.clone() as ArrayList<MoviesResponseModel.Result>
-        }
-    }
-
     fun setupSearchBar(titleEt: EditText, yearEt: EditText) {
 
         var yearActive = false
         var titleActive = false
-        val currentList = ArrayList<MoviesResponseModel.Result>()
         var moviesYearFilter = ArrayList<MoviesResponseModel.Result>()
         var moviesTitleFilter = ArrayList<MoviesResponseModel.Result>()
 
@@ -97,8 +89,6 @@ class FavoriteMoviesViewModel(
 
         })
 
-
-//        originalMovies.addAll(movies.favoriteMovies)
 
         yearEt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -154,5 +144,13 @@ class FavoriteMoviesViewModel(
             }
 
         })
+    }
+
+    fun clearEditText(titleEt: EditText, yearEt: EditText){
+        titleEt.text.clear()
+        yearEt.text.clear()
+    }
+    fun updateListViewModel(movies: MoviesResponseModel) {
+        this.movies = movies
     }
 }

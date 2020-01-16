@@ -35,6 +35,7 @@ class DashboardViewPagerAdapter(manager: FragmentManager) :
         return pageTitleList[position]
     }
 
+
     fun setMoviesResponse(moviesResponseModel: MoviesResponseModel, listFragment : ArrayList<Fragment>, titleList : ArrayList<String>) {
         this.moviesResponseModel = moviesResponseModel
         this.pageTitleList = titleList

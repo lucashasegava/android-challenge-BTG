@@ -68,7 +68,13 @@ class MovieFragment : Fragment(), MovieViewModelInterface {
         super.onResume()
         if (!moviesResponseModel.results.isNullOrEmpty()) {
             moviesResponseModel.results?.let { adapter.setMoviesResponseModel(it) }
+            moviesViewModel.updateViewModelList(moviesResponseModel)
         }
+    }
+
+    override fun onPause() {
+        moviesViewModel.clearText(fragmentMovieSearchBoxEditText)
+        super.onPause()
     }
 
     override fun updateFavoriteMoviesList(
@@ -88,12 +94,13 @@ class MovieFragment : Fragment(), MovieViewModelInterface {
         activity?.startActivityForResult(intent, RequestCodeConstants.START_MOVIE_DETAILS_ACTIVITY)
     }
 
-    fun updateModelFromRecyclerView(movies: MoviesResponseModel) {
-        moviesResponseModel = movies
-    }
+//    fun updateModelFromRecyclerView(movies: MoviesResponseModel) {
+//        moviesResponseModel = movies
+//    }
 
     fun setMovieResponseModel(movies: MoviesResponseModel) {
-        this.moviesResponseModel = movies
+        moviesResponseModel = movies
+        moviesViewModel.updateViewModelList(moviesResponseModel)
     }
 
 

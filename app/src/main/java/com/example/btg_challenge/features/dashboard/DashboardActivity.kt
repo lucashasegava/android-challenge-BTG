@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.viewpager.widget.ViewPager
 import com.example.btg_challenge.R
 import com.example.btg_challenge.constants.RequestCodeConstants
 import com.example.btg_challenge.features.BaseActivity
@@ -77,24 +78,24 @@ class DashboardActivity : BaseActivity(), DashboardViewModelInterface {
             RequestCodeConstants.START_MOVIE_DETAILS_ACTIVITY -> {
                 val moviesResponseModel =
                     data?.extras?.getSerializable(MovieDetailsViewModel.MODEL_FROM_MOVIE_DETAILS_KEY) as MoviesResponseModel
-                movieFragment.updateModelFromRecyclerView(moviesResponseModel)
-                notifyFavoriteListChanged(moviesResponseModel)
+                updateLists(moviesResponseModel)
+//                movieFragment.updateModelFromRecyclerView(moviesResponseModel)
+//                notifyFavoriteListChanged(moviesResponseModel)
             }
             RequestCodeConstants.START_MOVIE_DETAILS_ACTIVITY_FROM_FAVORITES -> {
                 val moviesResponseModel =
                     data?.extras?.getSerializable(MovieDetailsViewModel.MODEL_FROM_MOVIE_DETAILS_KEY) as MoviesResponseModel
-                favoriteMoviesFragment.updateModelFromRecyclerView(moviesResponseModel)
-                notifyDefaultListChanged(moviesResponseModel)
+                updateLists(moviesResponseModel)
+//                favoriteMoviesFragment.updateModelFromRecyclerView(moviesResponseModel)
+//                notifyDefaultListChanged(moviesResponseModel)
             }
         }
     }
 
-    private fun notifyDefaultListChanged(moviesResponseModel: MoviesResponseModel) {
+    private fun updateLists(moviesResponseModel: MoviesResponseModel) {
         movieFragment.setMovieResponseModel(moviesResponseModel)
-    }
-
-    private fun notifyFavoriteListChanged(moviesResponseModel: MoviesResponseModel) {
         favoriteMoviesFragment.setMovieResponseModel(moviesResponseModel)
+
     }
 
 }

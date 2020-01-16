@@ -17,6 +17,7 @@ import com.example.btg_challenge.features.dashboard.favorite.adapter.FavoriteMov
 import com.example.btg_challenge.features.dashboard.movie.MoviesViewModel
 import com.example.btg_challenge.features.details.MovieDetailsActivity
 import com.example.btg_challenge.models.MoviesResponseModel
+import kotlinx.android.synthetic.main.fragment_favorite_movies.*
 
 class FavoriteMoviesFragment : Fragment(), FavoriteMoviesViewModelInterface{
 
@@ -60,8 +61,11 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesViewModelInterface{
         super.onResume()
         if (!moviesResponseModel.favoriteMovies.isNullOrEmpty()) {
             adapter.setMovieResponseModel(moviesResponseModel.favoriteMovies)
+            favoriteMoviesViewModel.updateListViewModel(moviesResponseModel)
         }
     }
+
+
     override fun openMovieDetailsActivity(
         position: Int
     ) {
@@ -77,12 +81,17 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesViewModelInterface{
 
     fun setMovieResponseModel(moviesResponseModel: MoviesResponseModel) {
         this.moviesResponseModel = moviesResponseModel
-        favoriteMoviesViewModel.setOriginalMovieList(moviesResponseModel.favoriteMovies)
+        favoriteMoviesViewModel.updateListViewModel(moviesResponseModel)
     }
 
-    fun updateModelFromRecyclerView(movies: MoviesResponseModel) {
-        moviesResponseModel = movies
+    override fun onPause() {
+        favoriteMoviesViewModel.clearEditText(favoriteMoviesFragmentTitleSearchBoxEditText, favoriteMoviesFragmentYearSearchBoxEditText)
+        super.onPause()
     }
+
+//    fun updateModelFromRecyclerView(movies: MoviesResponseModel) {
+//        moviesResponseModel = movies
+//    }
 
     override fun getMovieFromSearchBar(movies: ArrayList<MoviesResponseModel.Result>) {
         adapter.setMovieResponseModel(movies)
