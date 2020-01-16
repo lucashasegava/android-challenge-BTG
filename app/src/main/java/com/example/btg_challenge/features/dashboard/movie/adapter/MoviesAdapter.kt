@@ -19,7 +19,7 @@ class MoviesAdapter(private val listener: MovieViewModelInterface) :
     RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
 
-    private lateinit var movies: ArrayList<MoviesResponseModel.Result>
+    private  var movies: ArrayList<MoviesResponseModel.Result> = ArrayList()
     private val picasso = Picasso.get()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val view =

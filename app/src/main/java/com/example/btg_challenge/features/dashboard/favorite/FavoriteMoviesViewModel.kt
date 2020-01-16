@@ -42,48 +42,109 @@ class FavoriteMoviesViewModel(
     }
 
     fun setupSearchBar(titleEt: EditText, yearEt: EditText) {
-//        moviesFromSearch = movies
-//        titleEt.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable?) {
-//                if (s.toString().isNullOrEmpty()) {
-//                    moviesFromSearch.results = originalMovies
-//                } else {
-//                    val result = moviesFromSearch.results?.filter {
-//                        it.title.toUpperCase().contains(s.toString().toUpperCase())
-//                    }
-//                    moviesFromSearch.results = result
-//                }
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            }
-//
-//        })
+
+        var yearActive = false
+        var titleActive = false
+        val currentList = ArrayList<MoviesResponseModel.Result>()
+        var moviesYearFilter = ArrayList<MoviesResponseModel.Result>()
+        var moviesTitleFilter = ArrayList<MoviesResponseModel.Result>()
+
+        titleEt.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (yearActive) {
+                    if (s.toString().isNullOrEmpty()) {
+                        titleActive = false
+                        favoriteMoviesViewModelInterface.getMovieFromSearchBar(moviesYearFilter)
+                    } else {
+                        moviesTitleFilter.clear()
+                        titleActive = true
+                        val results = moviesYearFilter.filter {
+                            it.title.toUpperCase().contains(s.toString().toUpperCase())
+                        }
+                        val moviesWithTitleYearFiltered = ArrayList<MoviesResponseModel.Result>()
+                        results.let { moviesWithTitleYearFiltered.addAll(it) }
+                        favoriteMoviesViewModelInterface.getMovieFromSearchBar(
+                            moviesWithTitleYearFiltered
+                        )
+                    }
+                } else {
+                    if (s.toString().isNullOrEmpty()) {
+                        titleActive = false
+                        if (movies.favoriteMovies != null) {
+                            favoriteMoviesViewModelInterface.getMovieFromSearchBar(movies.favoriteMovies)
+                        }
+                    } else {
+                        moviesTitleFilter.clear()
+                        titleActive = true
+                        val results = movies.favoriteMovies.filter {
+                            it.title.toUpperCase().contains(s.toString().toUpperCase())
+                        }
+                        moviesTitleFilter = ArrayList<MoviesResponseModel.Result>()
+                        results.let { moviesTitleFilter.addAll(it) }
+                        favoriteMoviesViewModelInterface.getMovieFromSearchBar(
+                            moviesTitleFilter
+                        )
+                    }
+                }
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+        })
 
 
 //        originalMovies.addAll(movies.favoriteMovies)
 
         yearEt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (s.toString().isNullOrEmpty()) {
-                    favoriteMoviesViewModelInterface.getMovieFromSearchBar(movies.favoriteMovies)
-                } else {
-                    val result = movies.favoriteMovies.filter {
-                        val date: Date =
-                            SimpleDateFormat("yyyy-MM-dd").parse(it.releaseDate)
-                        val calendar = Calendar.getInstance()
-                        calendar.time = date
-                        calendar.get(Calendar.YEAR).toString().contains(s.toString())
+                if (titleActive) {
+                    if (s.toString().isNullOrEmpty()) {
+                        yearActive = false
+                        favoriteMoviesViewModelInterface.getMovieFromSearchBar(moviesTitleFilter)
+                    } else {
+                        moviesYearFilter.clear()
+                        yearActive = true
+                        val result = moviesTitleFilter.filter {
+                            val date: Date =
+                                SimpleDateFormat("yyyy-MM-dd").parse(it.releaseDate)
+                            val calendar = Calendar.getInstance()
+                            calendar.time = date
+                            calendar.get(Calendar.YEAR).toString().contains(s.toString())
+                        }
+                        moviesYearFilter.addAll(result)
+                        favoriteMoviesViewModelInterface.getMovieFromSearchBar(
+                            moviesYearFilter
+                        )
                     }
-                    val filteredMovieListFromSearch = ArrayList<MoviesResponseModel.Result>()
-                    filteredMovieListFromSearch.addAll(result)
-                    favoriteMoviesViewModelInterface.getMovieFromSearchBar(
-                        filteredMovieListFromSearch
-                    )
+                } else {
+                    if (s.toString().isNullOrEmpty()) {
+                        yearActive = false
+                        if (movies.favoriteMovies != null) {
+                            favoriteMoviesViewModelInterface.getMovieFromSearchBar(movies.favoriteMovies)
+                        }
+                    } else {
+                        moviesYearFilter.clear()
+                        yearActive = true
+                        val result = movies.favoriteMovies.filter {
+                            val date: Date =
+                                SimpleDateFormat("yyyy-MM-dd").parse(it.releaseDate)
+                            val calendar = Calendar.getInstance()
+                            calendar.time = date
+                            calendar.get(Calendar.YEAR).toString().contains(s.toString())
+                        }
+
+                        moviesYearFilter.addAll(result)
+                        favoriteMoviesViewModelInterface.getMovieFromSearchBar(
+                            moviesYearFilter
+                        )
+                    }
                 }
+
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

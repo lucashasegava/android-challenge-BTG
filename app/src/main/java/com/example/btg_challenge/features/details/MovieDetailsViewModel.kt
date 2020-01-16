@@ -13,6 +13,10 @@ class MovieDetailsViewModel(
     private val movieDetailsViewModelInterface: MovieDetailsViewModelInterface
 ) {
 
+    companion object{
+        val MODEL_FROM_MOVIE_DETAILS_KEY = "moviesfrommoviedetails"
+    }
+
     init {
         val url: String
         if (isFromFavorite) {

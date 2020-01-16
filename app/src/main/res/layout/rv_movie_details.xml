@@ -8,14 +8,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="showDefaultContent"
-            type="java.lang.Boolean" />
-
-        <variable
-            name="showSearchContent"
-            type="java.lang.Boolean" />
-
-        <variable
             name="movieModel"
             type="com.example.btg_challenge.models.MoviesResponseModel.Result" />
 

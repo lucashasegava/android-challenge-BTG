@@ -1,11 +1,19 @@
 <resources>
     <string name="app_name">btg-challenge</string>
 
+    <!--Common-->
+    <string name="ok">Ok</string>
+    <string name="error">Erro</string>
+
     <!--Dashboard-->
     <string name="movies">Filmes</string>
     <string name="favorites">Favoritos</string>
     <string name="name">Nome</string>
     <string name="year">Ano</string>
+
+    <!--Error messages-->
+    <string name="error_wrong_api_key">Chave de API inválida: por favor utilize uma chave válida!</string>
+    <string name="error_no_results">Não foi possível encontrar nenhum resultado, por favor tente com outros parametros!</string>
 
     <!--Details-->
 </resources>

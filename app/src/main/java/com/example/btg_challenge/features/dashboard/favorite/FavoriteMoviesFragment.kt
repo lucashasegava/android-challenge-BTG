@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.btg_challenge.R
 import com.example.btg_challenge.constants.RequestCodeConstants
 import com.example.btg_challenge.features.dashboard.DashboardActivity
@@ -17,7 +18,7 @@ import com.example.btg_challenge.features.dashboard.movie.MoviesViewModel
 import com.example.btg_challenge.features.details.MovieDetailsActivity
 import com.example.btg_challenge.models.MoviesResponseModel
 
-class FavoriteMoviesFragment : Fragment(), FavoriteMoviesViewModelInterface {
+class FavoriteMoviesFragment : Fragment(), FavoriteMoviesViewModelInterface{
 
     private lateinit var moviesResponseModel: MoviesResponseModel
     private lateinit var adapter: FavoriteMoviesAdapter
@@ -30,7 +31,7 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesViewModelInterface {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_favorite_movies, container, false)
 
-        getMoviesResponseModel()
+         getMoviesResponseModel()
         val recyclerView = view.findViewById<RecyclerView>(R.id.favoriteMoviesFragmentRecyclerView)
         adapter =
             FavoriteMoviesAdapter(this)
@@ -91,7 +92,6 @@ class FavoriteMoviesFragment : Fragment(), FavoriteMoviesViewModelInterface {
     override fun updateMovieList(movie: MoviesResponseModel.Result, condition: Boolean) {
         moviesResponseModel =
             favoriteMoviesViewModel.updateMovieModel(movie, moviesResponseModel, condition)
-//        val dashboardActivity = activity as DashboardActivity
-//        dashboardActivity.notifyDefaultListChanged(moviesResponseModel)
     }
+
 }

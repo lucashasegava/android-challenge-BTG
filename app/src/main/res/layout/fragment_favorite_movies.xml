@@ -20,10 +20,10 @@
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginRight="@dimen/default_margin"
         android:background="@drawable/rounded_edittext"
-        android:imeOptions="actionDone"
-        android:inputType="number"
-        android:minHeight="45dp"
         android:hint="@string/name"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:minHeight="45dp"
         android:paddingLeft="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/gl70"
@@ -36,14 +36,15 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginRight="@dimen/default_margin"
         android:background="@drawable/rounded_edittext"
-        android:imeOptions="actionDone"
-        android:inputType="text"
         android:hint="@string/year"
+        android:imeOptions="actionDone"
+        android:inputType="number"
         android:minHeight="45dp"
         android:paddingLeft="20dp"
         app:layout_constraintLeft_toRightOf="@id/gl70"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/favoriteMoviesFragmentTitleSearchBoxEditText" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favoriteMoviesFragmentRecyclerView"
@@ -53,4 +54,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/favoriteMoviesFragmentTitleSearchBoxEditText"
         tools:listitem="@layout/rv_movie_details" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

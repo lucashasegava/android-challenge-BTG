@@ -48,7 +48,7 @@ class MovieDetailsActivity : BaseActivity(), MovieDetailsViewModelInterface {
 
     fun closeMovieDetailsActivity(view: View){
         val intent = Intent()
-        intent.putExtra("", movieDetailsViewModel.getMovieResponseModel())
+        intent.putExtra(MovieDetailsViewModel.MODEL_FROM_MOVIE_DETAILS_KEY, movieDetailsViewModel.getMovieResponseModel())
         setResult(RequestCodeConstants.START_MOVIE_DETAILS_ACTIVITY, intent)
         finish()
     }

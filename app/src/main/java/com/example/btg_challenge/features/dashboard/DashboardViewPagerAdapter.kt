@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import com.example.btg_challenge.features.dashboard.movie.MovieFragment
 import com.example.btg_challenge.models.MoviesResponseModel
 
@@ -25,6 +26,10 @@ class DashboardViewPagerAdapter(manager: FragmentManager) :
     override fun getCount(): Int {
         return listFragment.size
     }
+//
+//    override fun getItemPosition(`object`: Any): Int {
+//        return PagerAdapter.POSITION_NONE
+//    }
 
     override fun getPageTitle(position: Int): CharSequence? {
         return pageTitleList[position]
@@ -32,8 +37,9 @@ class DashboardViewPagerAdapter(manager: FragmentManager) :
 
     fun setMoviesResponse(moviesResponseModel: MoviesResponseModel, listFragment : ArrayList<Fragment>, titleList : ArrayList<String>) {
         this.moviesResponseModel = moviesResponseModel
-        this.listFragment = listFragment
         this.pageTitleList = titleList
+        this.listFragment = listFragment
         notifyDataSetChanged()
     }
+
 }

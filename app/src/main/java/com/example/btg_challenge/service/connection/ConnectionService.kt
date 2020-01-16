@@ -36,7 +36,7 @@ class ConnectionService private constructor(applicationContext: Context) {
 
     init {
         mApplicationContext = applicationContext
-        mDefaultRetryPolicy = DefaultRetryPolicy(30000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        mDefaultRetryPolicy = DefaultRetryPolicy(3000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
     }
 
     private fun executeRequest(
@@ -71,7 +71,7 @@ class ConnectionService private constructor(applicationContext: Context) {
                         } catch (e: UnsupportedEncodingException) {
                             e.printStackTrace()
                         }
-
+                        connectionServiceInterface.onFailure(jsonResponse.toString())
                     }
                 }
             }){
